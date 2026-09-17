@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-clock
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: devops-clock
+  template:
+    metadata:
+      labels:
+        app: devops-clock
+    spec:
+      containers:
+      - name: devops-clock
+        image: temitayocharles/devops-clock:v1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: APP_VERSION
+          value: "v1"
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http
