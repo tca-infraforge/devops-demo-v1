@@ -1,0 +1,622 @@
+.DS_Store
+_pycache__/
+terraform.tfstate
+terraform.tfstate.backup
+kubectl-debug
+kubeconfig
+.terraform/
+# ==============================================================================
+# .gitignore
+# Python + Terraform + Kubernetes + Argo CD
+#
+# Principles:
+# - Never commit credentials, private keys, Terraform state, or local kubeconfigs.
+# - Commit Terraform source, Kubernetes manifests, Helm charts, Kustomize files,
+#   and Argo CD application definitions.
+# - Ignore generated artifacts, caches, local overrides, and machine-specific data.
+# ==============================================================================
+
+
+# ==============================================================================
+# OPERATING SYSTEM
+# ==============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux / desktop environment
+.directory
+.Trash-*
+.nfs*
+
+
+# ==============================================================================
+# EDITORS / IDEs
+# ==============================================================================
+
+# Visual Studio Code
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Vim
+*.swp
+*.swo
+*.swn
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Sublime Text
+*.sublime-workspace
+
+# Temporary editor files
+*.tmp
+*.temp
+*.bak
+*.orig
+
+
+# ==============================================================================
+# PYTHON
+# ==============================================================================
+
+# Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Shared objects
+*.so
+
+# Python virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Testing
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.pyright/
+
+# Ruff
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Python profiling/debugging
+*.prof
+*.lprof
+
+# Local Python environment/version management
+.python-version
+
+# Poetry
+# poetry.lock should normally be committed.
+# Uncomment only for libraries where your dependency policy intentionally excludes it.
+# poetry.lock
+
+# PDM
+.pdm-python
+.pdm-build/
+
+# uv
+# uv.lock should normally be committed.
+.uv/
+
+# Pipenv
+# Pipfile.lock should normally be committed.
+
+
+# ==============================================================================
+# APPLICATION RUNTIME
+# ==============================================================================
+
+# Logs
+*.log
+logs/
+log/
+
+# PID/runtime files
+*.pid
+*.pid.lock
+run/
+
+# Local database files
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Temporary/runtime data
+tmp/
+temp/
+.cache/
+.cache-loader/
+
+# Application uploads or runtime-generated files
+uploads/
+runtime/
+data/local/
+
+
+# ==============================================================================
+# ENVIRONMENT VARIABLES / SECRETS
+# ==============================================================================
+
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+*.env.local
+*.local.env
+
+# Generic secrets
+secrets/
+.secret/
+.secret.*
+*.secret
+*.secrets
+
+# Private keys / certificates
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# SSH keys
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+
+# GPG
+*.gpg
+*.asc
+
+# Credential exports
+credentials.json
+service-account.json
+service_account.json
+*-credentials.json
+*-service-account.json
+*-service_account.json
+
+
+# ==============================================================================
+# TERRAFORM
+# ==============================================================================
+
+# Terraform local working directory
+**/.terraform/*
+
+# Terraform state
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Terraform CLI configuration
+.terraformrc
+terraform.rc
+
+# Terraform plan output
+*.tfplan
+*.tfplan.*
+
+# Common explicit plan filenames
+tfplan
+terraform.tfplan
+plan.out
+
+# Override files are normally local-only
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Local Terraform variable files may contain secrets.
+*.auto.tfvars
+*.auto.tfvars.json
+
+# Explicitly preserve examples/templates.
+!*.auto.tfvars.example
+!*.auto.tfvars.template
+
+# Local environment-specific tfvars
+*.local.tfvars
+*.local.tfvars.json
+
+# Terraform lock file MUST be committed for applications/infrastructure repos.
+!.terraform.lock.hcl
+
+# tfvars policy:
+#
+# Do NOT globally ignore all *.tfvars unless your organization intentionally
+# treats every variable file as secret.
+#
+# Prefer naming sensitive files:
+#   production.secret.tfvars
+#   dev.local.tfvars
+#   credentials.auto.tfvars
+#
+# And commit safe declarative configuration such as:
+#   environments/dev.tfvars
+#   environments/staging.tfvars
+#
+*.secret.tfvars
+*.secret.tfvars.json
+
+
+# ==============================================================================
+# TERRAGRUNT
+# ==============================================================================
+
+.terragrunt-cache/
+terragrunt-debug.tfvars.json
+
+
+# ==============================================================================
+# KUBERNETES
+# ==============================================================================
+
+# Local kubeconfig / credentials
+kubeconfig
+kubeconfig.*
+.kube/
+*.kubeconfig
+
+# kubectl local state/output
+kubectl-debug/
+kubectl-output/
+
+# Kubernetes Secret manifests that are intentionally local/unsealed.
+#
+# IMPORTANT:
+# Do not depend on filename matching as your primary secret-control mechanism.
+# Prefer External Secrets, SOPS, Sealed Secrets, Vault, etc.
+#
+*.secret.yaml
+*.secret.yml
+*-secret.local.yaml
+*-secret.local.yml
+
+# Local-only manifest overrides
+*.local.yaml
+*.local.yml
+
+
+# ==============================================================================
+# HELM
+# ==============================================================================
+
+# Helm dependency archives
+*.tgz
+
+# Helm local repository/cache
+.helm/
+helm-cache/
+
+# Local values containing credentials/secrets
+values.local.yaml
+values.local.yml
+values.secret.yaml
+values.secret.yml
+values-*.secret.yaml
+values-*.secret.yml
+
+
+# ==============================================================================
+# KUSTOMIZE
+# ==============================================================================
+
+# Generated render output
+kustomize-output/
+rendered/
+.rendered/
+generated-manifests/
+
+# Local-only overlays
+overlays/local/
+overlays/*/local/
+
+
+# ==============================================================================
+# ARGO CD / GITOPS
+# ==============================================================================
+
+# Argo CD CLI local config
+.argocd/
+
+# Local Argo configuration
+argocd.local.*
+*.argocd.local.yaml
+*.argocd.local.yml
+
+# Generated manifests / rendered GitOps output
+gitops-rendered/
+argocd-rendered/
+
+# IMPORTANT:
+#
+# DO NOT ignore:
+#
+# argocd/
+# applications/
+# applicationsets/
+# clusters/
+# environments/
+# gitops/
+# manifests/
+#
+# These commonly contain the declarative source of truth and should be
+# version controlled.
+
+
+# ==============================================================================
+# SOPS
+# ==============================================================================
+
+# SOPS itself encrypts secret values, therefore properly encrypted SOPS files
+# SHOULD normally be committed.
+#
+# Never commit local decrypted copies.
+
+*.decrypted.yaml
+*.decrypted.yml
+*.decrypted.json
+*.decrypted.env
+
+.sops-decrypted/
+
+
+# ==============================================================================
+# AGE / ENCRYPTION
+# ==============================================================================
+
+# Never commit age private keys
+keys.txt
+age-key.txt
+age-keys.txt
+*.agekey
+
+
+# ==============================================================================
+# ANSIBLE
+# ==============================================================================
+
+*.retry
+.vault_pass
+vault_password_file
+
+
+# ==============================================================================
+# CLOUD PROVIDER CREDENTIALS
+# ==============================================================================
+
+# AWS
+.aws/
+aws-credentials
+credentials.aws
+
+# Google Cloud
+.gcloud/
+application_default_credentials.json
+
+# Azure
+.azure/
+
+# DigitalOcean
+.doctl/
+
+# OCI
+.oci/
+
+
+# ==============================================================================
+# DOCKER / CONTAINERS
+# ==============================================================================
+
+# Docker Compose local overrides
+docker-compose.override.yml
+docker-compose.override.yaml
+compose.override.yml
+compose.override.yaml
+
+# Local Docker environment
+.docker/
+
+# Container runtime artifacts
+container-output/
+
+
+# ==============================================================================
+# CI/CD LOCAL ARTIFACTS
+# ==============================================================================
+
+# GitHub Actions local runner
+.actrc
+.act/
+
+# GitLab local artifacts
+.gitlab-runner/
+
+# Generic CI outputs
+ci-output/
+artifacts/
+reports/
+
+
+# ==============================================================================
+# SECURITY / SCANNING TOOLS
+# ==============================================================================
+
+# Trivy
+.trivycache/
+trivy-cache/
+
+# Checkov
+.checkov/
+
+# Semgrep
+.semgrep/
+
+# Bandit
+.bandit/
+
+# Local scan results
+security-reports/
+scan-results/
+*.sarif
+
+# Preserve explicitly version-controlled baseline if desired.
+!security/baseline.sarif
+
+
+# ==============================================================================
+# DEVELOPMENT TOOLS
+# ==============================================================================
+
+# direnv
+.direnv/
+.envrc.local
+
+# Task / local tooling
+.task/
+.local/
+.local-bin/
+
+# Pre-commit cache normally lives outside the repository, but guard against it.
+.pre-commit-cache/
+
+
+# ==============================================================================
+# BUILD / DISTRIBUTION OUTPUT
+# ==============================================================================
+
+out/
+output/
+target/
+release/
+releases/
+bin/
+obj/
+
+
+# ==============================================================================
+# BACKUPS / PATCHES / LOCAL SCRATCH
+# ==============================================================================
+
+*.bak
+*.backup
+*.old
+*.save
+
+scratch/
+.scratch/
+work/
+.workspace/
+
+# Patch/reject artifacts generated during conflict resolution
+*.rej
+
+
+# ==============================================================================
+# DEBUG / DIAGNOSTIC OUTPUT
+# ==============================================================================
+
+debug/
+diagnostics/
+dump/
+dumps/
+*.dump
+
+
+# ==============================================================================
+# PROJECT-SPECIFIC LOCAL CONFIGURATION
+# ==============================================================================
+
+config.local.yaml
+config.local.yml
+config.local.json
+config.local.toml
+
+settings.local.yaml
+settings.local.yml
+settings.local.json
+
+local-config/
