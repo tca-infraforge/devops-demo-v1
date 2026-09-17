@@ -1,0 +1,10 @@
+.git
+.github
+terraform.tfstate
+terraform
+k8s
+helm
+argocd
+monitoring
+_pycache_
+*.pyc
